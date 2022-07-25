@@ -1,0 +1,274 @@
+/* Start Public Styles */
+:root {
+    --index: 999;
+}
+body {
+    /* min-height: 2000px; */
+    padding-bottom: 10%;
+    padding-right: 10%;
+}
+.site-container {
+    display: grid;
+    grid-template-areas: "sideBar sidebar pageContent pageContent pageContent pageContent pageContent pageContent";
+    padding-top: 80px;
+}
+.site-content {
+    grid-area: pageContent;
+}
+.site-sidebar {
+    display: none;
+    grid-area: sideBar;
+    position: fixed;
+}
+.sidebar-toggle {
+    top: 25px;
+    z-index: 99;
+}
+.main-site-container {
+    max-width: 100% !important;
+    /* padding-top: 80px; */
+}
+.navbar-container {
+    z-index: var(--index) !important;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+}
+*[custom-title]::after {
+    content: "";
+    width: 0;
+    height: 0;
+    transition: all 500ms;
+    -webkit-transition: all 500ms;
+    -moz-transition: all 500ms;
+    -ms-transition: all 500ms;
+    -o-transition: all 500ms;
+}
+*[custom-title]:hover::after {
+    content: attr(custom-title);
+    position: absolute;
+    z-index: var(--index);
+    top: -20px;
+    left: 50px;
+    width: auto;
+    height: auto;
+    padding: 10px 5px;
+    background-color: #5599cc9f;
+    color: black;
+    font-size: larger;
+}
+.add-task {
+    position: fixed;
+    z-index: 1000;
+    align-content: center;
+    right: 100px;
+    top: 100px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    background-color: #55cc55aa;
+    font-size: 2rem;
+}
+.add-new-task,
+.update-task {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    bottom: 5%;
+    left: 15%;
+    width: 800px;
+    min-height: 500px;
+    background-color: #5599cc;
+    color: #eef;
+    font-size: larger;
+    font-weight: 900;
+}
+/* End Public Styles */
+/* Start Day Tasks Page (Home Page)*/
+.day-tasks-container {
+    display: grid;
+    grid-template-columns: auto repeat(7, 1fr);
+    /* overflow: auto; */
+}
+.task-index-container,
+.day-tasks-container {
+    background-color: #a8b8cc59;
+}
+.day-tasks-schedule {
+    grid-column-start: 2;
+    grid-column-end: 9;
+}
+.days-navigate {
+    z-index: 999;
+    grid-column-start: 1;
+    grid-column-end: 9;
+    position: sticky;
+    top: 10%;
+    background-color: #a8b8ccaa;
+}
+.days-navigate span {
+    color: #225588;
+    font-weight: 700;
+}
+
+.day-tasks-hours,
+.day-tasks-schedule {
+    display: grid;
+    grid-template-rows: repeat(25, 60px);
+}
+.day-tasks-hours div {
+    padding-top: 20px;
+    border-bottom: 0.5px dashed grey;
+    vertical-align: baseline;
+}
+.day-task,
+.day-number {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+.day-number {
+    position: sticky;
+    top: 15%;
+    margin-top: 1%;
+    border: none;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #225588;
+}
+.hour-task-title {
+    position: relative;
+}
+#hour-task-details {
+    position: fixed;
+    z-index: var(--index);
+    margin-left: 25%;
+}
+.hour-task-details {
+    width: 400px;
+    height: 400px;
+    background-color: #5599ccaa;
+    color: #eef;
+    font-size: larger;
+    font-weight: 900;
+}
+.hour-task-details-title {
+    color: #eef;
+    font-weight: 900;
+}
+.hour-task-done-title,
+.task-step-name.checked {
+    text-decoration: line-through;
+    text-decoration-color: #00000066;
+    -moz-text-decoration-color: #00000066;
+    text-decoration-thickness: 5px;
+}
+.task-details-dates {
+    bottom: 0;
+}
+.hour-task-details-close {
+    background-color: #22558850;
+}
+.task-steps {
+    display: none;
+    z-index: 1000;
+    position: fixed;
+    width: 400px;
+    background-color: #77aaff;
+    color: #225588;
+}
+.task-steps.active {
+    display: block;
+}
+.step-edit-form,
+.change-step-name {
+    max-width: 80%;
+}
+.change-step-name {
+    background-color: #77aacc;
+}
+.change-step-name:focus {
+    background-color: #55aacc;
+    color: black;
+    font-weight: 900;
+}
+/* End Day Tasks Page (Home Page)*/
+/* Start task index page */
+.task-index-container {
+    display: grid;
+    margin-left: auto;
+    width: 1100px;
+    max-width: 1100px;
+}
+.period-aria {
+    display: none;
+}
+.period-aria.active {
+    display: block;
+}
+.period-toggle {
+    cursor: pointer;
+}
+/* end task index page */
+/* Start Week Tasks Page */
+
+.week-tasks-container {
+    display: grid;
+    background-color: #22558888;
+    grid-template-rows: auto repeat(7, 1fr);
+    margin-left: 10%;
+}
+.week-tasks-hours,
+.week-day-tasks {
+    display: grid;
+    grid-template-rows: auto repeat(24, 80px);
+}
+.week-tasks-schedule {
+    grid-column-start: 2;
+    grid-column-end: 8;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+.week-day-tasks {
+    border-left: 1px double gray;
+    border-right: 1px double gray;
+}
+.week-hour-tasks,
+.week-day-number {
+    border-bottom: 1px solid gray;
+}
+.week-today {
+    background-color: #eeeeffaa;
+}
+/* End Week Tasks Page */
+/* Start Month Tasks Page */
+.month-tasks-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 150px);
+    margin-left: 10%;
+}
+.month-day-tasks {
+    border: 1px solid grey;
+}
+/* End Month Tasks Page */
+/* Start Year Tasks Page */
+.year-tasks-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 200px);
+}
+.year-month-container {
+    border: 1px solid blue;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(2, auto) repeat(5, fr);
+}
+.year-month-name {
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+/* End Year Tasks Page */ ;
