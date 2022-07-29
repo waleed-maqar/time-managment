@@ -1,0 +1,7 @@
+* {
+    color: red !important;
+}
+
+.expired-tasks {
+    display: none;
+}

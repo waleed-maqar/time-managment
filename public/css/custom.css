@@ -131,8 +131,12 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 2px;
+    top: 30%;
     left: 35%;
     width: 400px;
+    min-height: 120px;
+    max-height: 300px;
+    overflow: auto;
     background-color: #5599ccee;
     color: #eef;
     font-size: larger;
@@ -418,4 +422,3 @@ body {
 }
 
 /* End Year Tasks Page */
-;

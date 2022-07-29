@@ -16,11 +16,12 @@
                 <div class="row">
                     <div class="col-9 form-group">
                         <label for="name">User Name</label>
-                        <input type="text" name="name" class="form-control" id="name">
+                        <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
                     </div>
                     <div class="col-9 form-group">
                         <label for="email">E-mail</label>
-                        <input type="email" name="email" class="form-control" id="email">
+                        <input type="email" name="email" class="form-control" id="email"
+                            value="{{ old('email') }}">
                     </div>
                     <div class="col-9 form-group">
                         <label for="password">Password</label>

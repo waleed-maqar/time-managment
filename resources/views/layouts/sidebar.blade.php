@@ -8,7 +8,7 @@
         <a class="btn sidebar-month-tasks-link" data-day="{{ $date }}">Month</a>
         <a class="btn sidebar-year-tasks-link" data-day="{{ $date }}">Year</a>
         @if (Count($expiredTasks) != 0)
-            <a class="btn btn-danger sidebar-year-tasks-link element-show" data-element=".expired-tasks">
+            <a class="btn btn-danger element-show" data-element=".expired-tasks">
                 Your expierd Tasks ({{ Count($expiredTasks) }})
             </a>
         @endif
