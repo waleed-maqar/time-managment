@@ -126,8 +126,8 @@ body {
 
 .expired-tasks {
     /* display: none; */
+    z-index: 9998;
     position: fixed;
-    z-index: calc(var(--index)+9);
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 2px;
@@ -187,6 +187,17 @@ body {
 
 .page-content {
     margin: auto;
+}
+
+.jump-to-date {
+    display: none;
+    z-index: 9999;
+    position: fixed;
+    top: 25%;
+    left: 33%;
+    width: 33%;
+    padding: 1%;
+    background-color: #a8b8ccaa;
 }
 
 /* End Public Styles */
@@ -422,3 +433,4 @@ body {
 }
 
 /* End Year Tasks Page */
+/*  */

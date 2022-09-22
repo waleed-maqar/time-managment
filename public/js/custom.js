@@ -22,9 +22,14 @@ $(document).ready(function () {
     $(document).on('click', '.go-to-date', function () {
         var duration = $(this).data('duration')
         var day = $(this).data('day')
-        console.log(duration)
         eval("goTo" + duration + "(day)")
-        // goToDay($(this).data('day'))
+    })
+    $(document).on('submit', '#jump-to-date-form', function (e) {
+        e.preventDefault()
+        period = $("#jump-to-date-period").val()
+        day = $("#jump-to-date-day").val()
+        eval("goTo" + period + "('" + day + "')")
+        $(this).parent().hide()
     })
     $(document).on('click', '.go-to-day', function () {
         goToDay($(this).data('day'))

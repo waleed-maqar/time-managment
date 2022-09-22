@@ -24,7 +24,7 @@ class CalendarController extends Controller
 
         $date = $date ?? Carbon::now()->format('Y-m-d');
         $weekStart = Carbon::parse($date)->startOfWeek(Carbon::SUNDAY)->format('Y-m-d');
-        $weekEnd = Carbon::parse($date)->endOfWeek()->format('Y-m-d');
+        $weekEnd = Carbon::parse($date)->endOfWeek(Carbon::SATURDAY)->format('Y-m-d');
         $messages = [];
         return view('includes.pages.week', compact(['date', 'weekStart', 'weekEnd', 'messages']));
     }

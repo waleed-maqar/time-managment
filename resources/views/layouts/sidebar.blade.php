@@ -7,6 +7,7 @@
         <a class="btn sidebar-week-tasks-link" data-day="{{ $date }}">Week</a>
         <a class="btn sidebar-month-tasks-link" data-day="{{ $date }}">Month</a>
         <a class="btn sidebar-year-tasks-link" data-day="{{ $date }}">Year</a>
+        <a class="btn sidebar-go-to-date element-show" data-element=".jump-to-date">Go to Date</a>
         @if (Count($expiredTasks) != 0)
             <a class="btn btn-danger element-show" data-element=".expired-tasks">
                 Your expierd Tasks ({{ Count($expiredTasks) }})

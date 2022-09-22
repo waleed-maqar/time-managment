@@ -5,6 +5,9 @@
         <span class="btn element-show add-task" custom-title="Add New Task" data-element=".add-new-task">
             <i class="fa-solid fa-plus"></i>
         </span>
+        <div class="jump-to-date">
+            @include('includes.parts.gotodate')
+        </div>
         <div class="ml-5 p-3 add-new-task">
             @include('includes.parts.addtaskform')
         </div>
