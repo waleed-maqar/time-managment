@@ -10,14 +10,13 @@
         @forelse ($userTasks as $pereority=>$tasks)
             <div class="task-pereority-container" id="tasks-with-{{ $pereority }}-pereority">
                 <h1>Tasks with {{ $pereority }} pereority</h1>
-                @if (count($tasks->get()) > 3)
-                    <span class="btn tasks-periority-paginate tasks-seemore" data-per="{{ $pereority }}" data-pages="6">see
+                @if (count($tasks->get()) > 12)
+                    <span class="btn tasks-periority-paginate tasks-seemore" data-per="{{ $pereority }}" data-pages="24">see
                         more</span>
                 @endif
-                @forelse ($tasks->paginate(3) as $task)
+                @forelse ($tasks->paginate(12) as $task)
                     <span class="badge badge-{{ $task->outOfDate() ? 'danger' : 'light' }} hour-task-title"
-                        custom-title="{{ $task->title }} Begins at {{ $task->start_date }}"
-                        data-task="{{ $task->id }}">
+                        custom-title="{{ $task->title }} Begins at {{ $task->start_date }}" data-task="{{ $task->id }}">
                         {{ excerpt($task->title, 5) }}
                     </span>
                 @empty

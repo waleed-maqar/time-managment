@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Task extends Model
 {
+    use HasFactory;
     protected $fillable = ['title', 'user_id', 'description', 'periority', 'start_date', 'end_date', 'done_date'];
     protected $cats = [
         'start_date' => 'date:Y-m-d H:i',
@@ -14,10 +16,6 @@ class Task extends Model
         'done_date' => 'date:Y-m-d H:i'
     ];
 
-    public function owner()
-    {
-        return $this->belongsTo(User::class, 'user_id')->first();
-    }
     public function steps()
     {
         return $this->hasMany(Step::class);

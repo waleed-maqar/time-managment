@@ -6,13 +6,13 @@
 body {
     /* min-height: 2000px; */
     padding-bottom: 10%;
-    padding-right: 10%;
+    padding-right: 5%;
     background-image: linear-gradient(60deg, #88552255, #22558855);
 }
 
 .main-site-container {
     display: grid;
-    grid-template-areas: "sideBar sideBar  siteContent siteContent siteContent siteContent siteContent siteContent";
+    grid-template-areas: "sideBar sideBar siteContent siteContent siteContent siteContent siteContent siteContent";
     padding-top: 80px;
 }
 
@@ -148,6 +148,12 @@ body {
     grid-column-end: 6;
 }
 
+.expired-tasks-container {
+    display: grid;
+    grid-template-columns: repeat(6, 50px);
+    grid-gap: 5px;
+}
+
 .return-messages {
     display: none;
     position: fixed;
@@ -251,11 +257,12 @@ body {
 
 .hour-task-title {
     position: relative;
+    cursor: pointer;
 }
 
 #hour-task-details {
     position: fixed;
-    z-index: calc(var(--index)+10);
+    z-index: 9999;
     margin-left: 25%;
 }
 
@@ -417,7 +424,7 @@ body {
 .year-tasks-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 200px);
+    grid-template-rows: repeat(4, 250px);
 }
 
 .year-month-container {
@@ -430,6 +437,15 @@ body {
 .year-month-name {
     grid-column-start: 1;
     grid-column-end: 8;
+}
+
+.year-day-has-tasks {
+    background-color: #67ca;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
 }
 
 /* End Year Tasks Page */

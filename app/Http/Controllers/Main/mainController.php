@@ -6,26 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-use App\Http\Helpers\Helper;
-use App\Mail\testMail;
 use App\Models\User;
-use App\Notifications\testNote;
-use Carbon\CarbonPeriod;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class mainController extends Controller
 {
-    public function __construct()
+    public function dateIndexedTasks(Request $request)
     {
-        // $this->middleware('verified');
-    }
-
-    public function homePage(Request $request)
-    {
-        $carbon = new Carbon;
-
         $byYear = function ($task) {
             return Carbon::parse($task->start_date)->format('Y');
         };
@@ -38,6 +24,20 @@ class mainController extends Controller
         $userTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->get()->groupBy([$byYear, $byMonth, $byDay]);
         $expiredTasks = User::find(Auth::id())->expiredTasks();
         $date = Carbon::now()->format('Y-m-d');
-        return view('index', compact(['carbon',  'date', 'userTasks', 'expiredTasks']));
+        return view('index', compact(['date', 'userTasks', 'expiredTasks']));
+    }
+    //
+
+    public function periorityIndexedTasks()
+    {
+        $userHighTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'high');
+        $userNormalTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'normal');
+        $userLowTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'low');
+        $userTasks = [
+            'high' => $userHighTasks,
+            'normal' => $userNormalTasks,
+            'low' => $userLowTasks,
+        ];
+        return view('includes.pages.taskPeriority', compact(['userTasks']));
     }
 }

@@ -21,8 +21,8 @@ class CreateTasksTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('title');
-            $table->text('description');
-            $table->enum('periority', ['hiegh', 'normal', 'low'])->default('normal');
+            $table->text('description')->nullable();
+            $table->enum('periority', ['high', 'normal', 'low'])->default('normal');
             $table->timestamp('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('end_date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('done_date')->nullable();

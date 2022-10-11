@@ -10,15 +10,11 @@ use App\Http\Helpers\Helper;
 use App\Http\Requests\stepRequest;
 use App\Http\Requests\taskRequest;
 use App\Models\Task;
-use App\Models\Step;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class taskController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('taskOwner', ['only' => 'show']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -26,8 +22,6 @@ class taskController extends Controller
      */
     public function index()
     {
-        $carbon = new Carbon;
-
         $byYear = function ($task) {
             return Carbon::parse($task->start_date)->format('Y');
         };
@@ -38,30 +32,17 @@ class taskController extends Controller
             return Carbon::parse($task->start_date)->format('d-M-Y');
         };
         $userTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->get()->groupBy([$byYear, $byMonth, $byDay]);
-        // return view('transit.taskindex', compact(['carbon',  'userTasks']));
-        return view('includes.pages.taskIndex', compact(['carbon',  'userTasks']));
+        return view('includes.pages.taskIndex', compact(['userTasks']));
     }
-    public function taskPeriority()
-    {
-        $carbon = new Carbon;
-
-        $userHighTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'high');
-        $userNormalTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'normal');
-        $userLowTasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', 'low');
-        $userTasks = [
-            'high' => $userHighTasks,
-            'normal' => $userNormalTasks,
-            'low' => $userLowTasks,
-        ];
-        return view('includes.pages.taskPeriority', compact(['carbon',  'userTasks']));
-    }
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param string $pereority
+     */
     public function periority(Request $request, $pereority)
     {
-        $carbon = new Carbon;
-
         $pages = $request['pages'];
         $tasks = User::find(Auth::id())->tasks()->orderBy('start_date')->where('periority', $pereority);
-        return view('includes.parts.periority', compact(['carbon',  'pereority', 'pages', 'tasks']));
+        return view('includes.parts.periority', compact(['pereority', 'pages', 'tasks']));
     }
 
     /**
@@ -71,8 +52,7 @@ class taskController extends Controller
      */
     public function create()
     {
-        $carbon = new Carbon;
-        return view('calendar.createTask', compact(['carbon']));
+        return view('calendar.createTask');
     }
 
     /**
@@ -84,11 +64,9 @@ class taskController extends Controller
     public function store(taskRequest $request)
     {
         if ($request->validator->fails()) {
-            $carbon = new Carbon;
-
             $errors = $request->validator->messages();
             $messages = $errors->messages();
-            $showErrors = view('includes.parts.returnMessages', compact(['carbon',  'messages']))->render();
+            $showErrors = view('includes.parts.returnMessages', compact(['messages']))->render();
             $data = ['status' => false, 'showErrors' => $showErrors];
             return response()->json($data);
         }
@@ -96,10 +74,8 @@ class taskController extends Controller
         $request['start_date'] .= ' ' . $request['start_time'];
         $request['end_date'] .= ' ' . $request['end_time'];
         $request = $request->except('_token', 'start_time', 'end_time');
-        $carbon = new Carbon;
-
         $task = Task::create($request);
-        $showTask = view('includes.parts.taskDetails', compact(['carbon',  'task']))->render();
+        $showTask = view('includes.parts.taskDetails', compact(['task']))->render();
         $data = ['status' => true, 'showTask' => $showTask];
         return response()->json($data);
     }
@@ -112,10 +88,10 @@ class taskController extends Controller
      */
     public function show(Task $task)
     {
-        $carbon = new Carbon;
-
-        // return view('transit.taskDetails', compact(['carbon',  'task']));
-        return view('includes.parts.taskDetails', compact(['carbon',  'task']));
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
+        return view('includes.parts.taskDetails', compact(['task']));
     }
 
     /**
@@ -126,10 +102,11 @@ class taskController extends Controller
      */
     public function edit(Task $task)
     {
-        $carbon = new Carbon;
 
-        $messages = [];
-        return view('includes.parts.taskUpdate', compact(['carbon',  'task', 'messages']));
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
+        return view('includes.parts.taskUpdate', compact(['task']));
     }
 
     /**
@@ -141,12 +118,15 @@ class taskController extends Controller
      */
     public function update(taskRequest $request, Task $task)
     {
-        $carbon = new Carbon;
+
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
 
         if ($request->validator->fails()) {
             $errors = $request->validator->messages();
             $messages = $errors->messages();
-            $showErrors = view('includes.parts.returnMessages', compact(['carbon',  'messages']))->render();
+            $showErrors = view('includes.parts.returnMessages', compact(['messages']))->render();
             $data = ['status' => false, 'showErrors' => $showErrors];
             return response()->json($data);
         }
@@ -155,32 +135,37 @@ class taskController extends Controller
         $request['end_date'] .= ' ' . $request['end_time'];
         $request = $request->except('_token', 'start_time', 'end_time');
         $task->update($request);
-        $showTask = view('includes.parts.taskDetails', compact(['carbon',  'task']))->render();
+        $showTask = view('includes.parts.taskDetails', compact(['task']))->render();
         $data = ['status' => true, 'showTask' => $showTask];
         return response()->json($data);
     }
     //
     public function taskDone(Task $task)
     {
-        $carbon = new Carbon;
+
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
 
         $task->done_date = Carbon::now()->format('Y-m-d H:i');
         $task->save();
         $task->steps()->update(['done' => true]);
         $tasks = Auth::user()->tasks;
-        return view('includes.parts.taskDetails', compact(['carbon',  'tasks', 'task']));
+        return view('includes.parts.taskDetails', compact(['tasks', 'task']));
     }
     public function taskNotDone(Task $task, $step)
     {
-        $carbon = new Carbon;
 
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
         $task->done_date = null;
         $task->save();
         if ($step == '0' && $task->allStepsDone()) {
             $task->steps()->update(['done' => 0]);
         }
         $tasks = Auth::user()->tasks;
-        return view('includes.parts.taskDetails', compact(['carbon',  'tasks', 'task']));
+        return view('includes.parts.taskDetails', compact(['tasks', 'task']));
     }
     // for steps
 
@@ -193,6 +178,10 @@ class taskController extends Controller
      */
     public function destroy(Task $task)
     {
+
+        if (!Gate::allows('update', $task->user_id)) {
+            abort(403);
+        }
         $task->forceDelete();
         $messages = ['deleted' => ['Task has been DELETED']];
         return view('includes.parts.returnMessages', compact(['messages']));

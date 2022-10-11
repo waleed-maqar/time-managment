@@ -33,8 +33,16 @@
                 <div>sun</div>
                 <div>sun</div>
                 @for ($d = 1; $d <= $daysNum; $d++)
-                    <div class="btn badge badge-{{ count(auth()->user()->dayTasks($year . '-' . $m . '-' . $d)) == 0? '': 'dark rounded-circle' }} go-to-day"
+                    {{-- <div class="btn {{ count(auth()->user()->dayTasks($year . '-' . $m . '-' . $d)) == 0? '': 'badge badge-dark rounded-circle' }} go-to-day"
                         data-day="{{ $year . '-' . $m . '-' . $d }}">
+                        {{ str_repeat(0, 2 - strlen($d)) . $d }}</div> --}}
+                    <div @class([
+                        'btn go-to-day',
+                        'year-day-has-tasks' =>
+                            count(
+                                auth()->user()->dayTasks($year . '-' . $m . '-' . $d)
+                            ) != 0,
+                    ]) data-day="{{ $year . '-' . $m . '-' . $d }}">
                         {{ str_repeat(0, 2 - strlen($d)) . $d }}</div>
                 @endfor
             </div>

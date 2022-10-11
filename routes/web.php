@@ -26,15 +26,15 @@ use Illuminate\Support\Carbon;
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [mainController::class, 'homepage'])->name('homepage');
+    Route::get('/', [mainController::class, 'dateIndexedTasks'])->name('homepage');
+    Route::get('taskPeriority', [mainController::class, 'periorityIndexedTasks']);
     Route::resource('task', taskController::class);
     Route::controller(taskController::class)->group(function () {
-        Route::get('taskPeriority', 'taskPeriority');
         Route::get('periority/{per}', 'periority');
         Route::get('taskdone/{task}', 'taskDone');
         Route::get('tasknotdone/{task}/{step?}', 'taskNotDone');
     });
-    Route::resource('step', 'Main\stepController');
+    Route::resource('step', 'Main\stepController')->only(['index', 'store', 'update', 'destroy']);
     Route::controller(stepController::class)->group(function () {
         Route::get('stepdone/{step}', 'stepDone');
         Route::get('stepnotdone/{step}', 'stepNotDone');

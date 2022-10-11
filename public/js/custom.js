@@ -8,6 +8,9 @@ $(document).ready(function () {
         let day = localStorage.getItem("day")
         window[period](day)
     }
+    $(document).on("click", '.navbar-brand', function () {
+        localStorage.removeItem("period")
+    })
     //
     $(document).on('click', '.element-toggle', function () {
         $($(this).data('element')).toggle()

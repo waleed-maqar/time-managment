@@ -47,10 +47,4 @@ class Calendar
     {
         return  User::find(Auth::id())->tasks()->whereDate('start_date', '=', $day)->get();
     }
-    public function getName()
-    {
-    }
-    public function setHelperSet()
-    {
-    }
 }

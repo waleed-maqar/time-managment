@@ -8,25 +8,33 @@ function goToDay(day) {
     $.ajax({
         url: "/day/" + day,
     }).done(function (html) {
-        $("#main-tasks-container").html(html);
+        mainContainerContent(html);
     })
 }
+/**
+ *
+ * @param {string} date
+ */
 function goToWeek(date) {
     localStorage.setItem("period", "goToWeek");
     localStorage.setItem("day", date);
     $.ajax({
         url: "/week/" + date,
     }).done(function (html) {
-        $("#main-tasks-container").html(html);
+        mainContainerContent(html)
     })
 }
+/**
+ *
+ * @param {string} date
+ */
 function goToMonth(date) {
     localStorage.setItem("period", "goToMonth");
     localStorage.setItem("day", date);
     $.ajax({
         url: '/month/' + date,
     }).done(function (html) {
-        $("#main-tasks-container").html(html);
+        mainContainerContent(html)
     })
 }
 function goToYear(date) {
@@ -35,28 +43,26 @@ function goToYear(date) {
     $.ajax({
         url: '/year/' + date,
     }).done(function (html) {
-        $("#main-tasks-container").html(html);
+        mainContainerContent(html)
     })
 }
 //
 function taskIndex(day = null) {
-
     localStorage.setItem("period", "taskIndex");
     localStorage.setItem("day", day);
     $.ajax({
         url: '/task'
     }).done(function (html) {
-        $('#main-tasks-container').html(html)
+        mainContainerContent(html)
     })
 }
 function taskPeriority(day = null) {
-
     localStorage.setItem("period", "taskPeriority");
     localStorage.setItem("day", day);
     $.ajax({
         url: '/taskPeriority'
     }).done(function (html) {
-        $('#main-tasks-container').html(html)
+        mainContainerContent(html)
     })
 }
 function periority(per, pages) {
@@ -137,7 +143,6 @@ function taskDelete(task, day) {
         function taskDeleted() {
             $('.return-messages').html(html).show()
             setTimeout(function () { $('.return-messages').hide() }, 3000)
-
         }
         window.setTimeout(taskDeleted, 500)
         $('.hour-task-title[data-task=' + task + ']').hide()

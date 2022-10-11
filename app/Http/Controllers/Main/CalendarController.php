@@ -11,38 +11,28 @@ use App\Models\User;
 class CalendarController extends Controller
 {
 
-    public function day(Request $request, $date)
+    public function day($date)
     {
-        $expiredTasks = User::find(Auth::id())->expiredTasks();
-        if ($request->ajax()) {
-            return view('includes.pages.day', compact(['date', 'expiredTasks']));
-        }
-        return view('includes.pages-test.day', compact(['date', 'expiredTasks']));
+        return view('includes.pages.day', compact(['date']));
     }
+    //
     public function week($date)
     {
-
-        $date = $date ?? Carbon::now()->format('Y-m-d');
         $weekStart = Carbon::parse($date)->startOfWeek(Carbon::SUNDAY)->format('Y-m-d');
         $weekEnd = Carbon::parse($date)->endOfWeek(Carbon::SATURDAY)->format('Y-m-d');
-        $messages = [];
-        return view('includes.pages.week', compact(['date', 'weekStart', 'weekEnd', 'messages']));
+        return view('includes.pages.week', compact(['date', 'weekStart', 'weekEnd']));
     }
+    //
     public function month($date)
     {
-
-
-        $daysNumber = Carbon::parse($date)->daysInMonth;
         $month = Carbon::parse($date)->format('Y-m');
-        $messages = [];
-        return view('includes.pages.month', compact(['date', 'daysNumber', 'month', 'messages']));
+        $daysNumber = Carbon::parse($date)->daysInMonth;
+        return view('includes.pages.month', compact(['date', 'month', 'daysNumber']));
     }
+    //
     public function year($date)
     {
-
-
-        $messages = [];
         $year = Carbon::parse($date)->format('Y');
-        return view('includes.pages.year', compact(['messages', 'date', 'year']));
+        return view('includes.pages.year', compact(['date', 'year']));
     }
 }

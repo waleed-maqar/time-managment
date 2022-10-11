@@ -43,7 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function expiredTasks()
     {
-        // dd(Carbon::parse(now())->addHours(12)->format('Y-m-d H:i'));
         return $this->tasks()->whereDate('end_date', '<=', Carbon::parse(now())->format('Y-m-d H:i'))->where('done_date', '=', null)->get();
     }
     public function dayTasks($day)
