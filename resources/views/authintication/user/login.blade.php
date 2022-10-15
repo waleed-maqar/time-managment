@@ -1,6 +1,11 @@
 @extends('includes.mainTemplate')
 @section('content')
     <div class="card mx-auto mt-5 w-50">
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
+        @endif
         @if (session()->has('failed'))
             <div class="alert alert-danger">{{ session('failed') }}</div>
         @endif

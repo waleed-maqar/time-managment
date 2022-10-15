@@ -1,5 +1,5 @@
 <div class="d-inline">
-    <form action="" class="">
+    <form>
         <div class="form-check">
             <input class="form-check-input single-step-check" type="checkbox" id="flexCheckDefault"
                 data-step="{{ $step->id }}" data-last="{{ $step->lastStep() ? true : false }}"

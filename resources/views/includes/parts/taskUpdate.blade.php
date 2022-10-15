@@ -6,7 +6,7 @@
     </h4>
     @csrf @method('PUT')
     <div class="row">
-        @if ($messages)
+        @isset($messages)
             <ul class="offset-2 col-8">
                 @foreach ($messages as $error)
                     @foreach ($error as $message)
@@ -15,7 +15,7 @@
                 @endforeach
             </ul>
             <div class="offset-2"></div>
-        @endif
+        @endisset
         <h4 class="col-2">Task</h4>
         <div class="form-group col-4">
             <input type="text" class="form-control" name="title" value="{{ $task->title }}">
@@ -41,8 +41,8 @@
         <div class="offset-2"></div>
         <h4 class="col-2">To</h4>
         <div class=" col-4 form-group">
-            <input type="date" name="end_date"
-                value="{{ \Carbon\Carbon::parse($task->end_date)->format('Y-m-d') }}" class="form-control">
+            <input type="date" name="end_date" value="{{ \Carbon\Carbon::parse($task->end_date)->format('Y-m-d') }}"
+                class="form-control">
         </div>
         <div class="col-4 form-group">
             <input type="time" name="end_time" value="{{ \Carbon\Carbon::parse($task->end_date)->format('H:i') }}"

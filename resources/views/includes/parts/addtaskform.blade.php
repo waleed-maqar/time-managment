@@ -7,13 +7,15 @@
     <div class="row">
         <h4 class="col-2">Task</h4>
         <div class="form-group col-4">
-            <input type="text" class="form-control" name="title" value="{{ old('title') }}">
+            <input type="text" class="form-control" name="title" value="{{ old('title') }}"
+                placeholder="Task title">
         </div>
         <h4 class="col-2">Periority</h4>
         <div class="col-4 form-group">
             <select name="periority" class="form-control">
+                <option selected>Choose periority</option>
                 <option value="low">Low</option>
-                <option value="normal" selected>Normal</option>
+                <option value="normal">Normal</option>
                 <option value="high">High</option>
             </select>
         </div>
@@ -39,7 +41,7 @@
         <div class="offset-2"></div>
         <h4 class="col-2">Discription</h4>
         <div class="form-group col-8">
-            <textarea class="form-control" rows="6" name="description"></textarea>
+            <textarea class="form-control" rows="6" name="description" placeholder="Details about task"></textarea>
         </div>
         <div class="col-6 form-group">
             <button type="submit" class="form-control btn btn-primary" id="add-task-submit"><strong>Add

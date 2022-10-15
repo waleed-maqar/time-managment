@@ -1,9 +1,6 @@
 @extends('includes.mainTemplate')
 @section('content')
     <div class="card mx-auto mt-5 w-50">
-        @if (session()->has('failed'))
-            <div class="alert alert-danger">{{ session('failed') }}</div>
-        @endif
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
@@ -12,7 +9,7 @@
         <form action="{{ route('user.store') }}" method="POST" class="p-3">
             <fieldset>
                 @csrf
-                <legend>User Log-in</legend>
+                <legend>User Register</legend>
                 <div class="row">
                     <div class="col-9 form-group">
                         <label for="name">User Name</label>

@@ -32,9 +32,9 @@ class taskRequest extends FormRequest
         $timeAfter = $request['start_date'] == $request['end_date'] ? '|after:' . $request['start_time'] : '';
         return [
             'title' => 'required|max:60',
-            'description' => 'required|max:250',
+            'description' => 'max:250',
             'periority' => 'required|in:normal,high,low',
-            'start_date' => 'required|',
+            'start_date' => 'required',
             'start_time' => 'required',
             'end_date' => 'required|after_or_equal:' . $request['start_date'],
             'end_time' => 'required' . $timeAfter
